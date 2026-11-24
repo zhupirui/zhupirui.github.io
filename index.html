@@ -1,0 +1,293 @@
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Claude Code 安装教程</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+  /* 布局：单栏文档，左侧一条细边线标注章节；代码块做“终端”样式（始终深色）。 */
+  :root{
+    --bg:#F4F6F8; --surface:#FFFFFF; --surface-2:#EDF1F5;
+    --fg:#17202B; --muted:#5A6B7E;
+    --accent:#0B7285; --accent-strong:#0A5D6D; --accent-wash:#E2F1F3;
+    --border:#DDE4EA;
+    --code-bg:#0E1722; --code-fg:#D8E3EC; --code-muted:#8A9BAF;
+    --radius:14px;
+    --font-disp:'Space Grotesk',system-ui,sans-serif;
+    --font-body:'Inter',system-ui,sans-serif;
+    --font-mono:'JetBrains Mono',ui-monospace,SFMono-Regular,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0D141C; --surface:#131C26; --surface-2:#1A2531;
+      --fg:#E7EDF3; --muted:#93A5B8;
+      --accent:#3FC6D6; --accent-strong:#6FD8E4; --accent-wash:#12333A;
+      --border:#24303D;
+      --code-bg:#0A1118; --code-fg:#DCE6EF; --code-muted:#7E92A8;
+      color-scheme:dark;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0D141C; --surface:#131C26; --surface-2:#1A2531;
+    --fg:#E7EDF3; --muted:#93A5B8;
+    --accent:#3FC6D6; --accent-strong:#6FD8E4; --accent-wash:#12333A;
+    --border:#24303D;
+    --code-bg:#0A1118; --code-fg:#DCE6EF; --code-muted:#7E92A8;
+    color-scheme:dark;
+  }
+
+  *{box-sizing:border-box}
+  body{
+    background:var(--bg); color:var(--fg);
+    font-family:var(--font-body); font-size:16px; line-height:1.65;
+    margin:0;
+    padding-left:max(16px, env(safe-area-inset-left, 0px));
+    padding-right:max(16px, env(safe-area-inset-right, 0px));
+    padding-block:max(40px, env(safe-area-inset-top, 0px)) 72px;
+  }
+  .wrap{max-width:760px; margin-inline:auto}
+
+  header{padding-bottom:8px; border-bottom:1px solid var(--border); margin-bottom:40px}
+  .eyebrow{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--accent); margin:0 0 14px; font-weight:500;
+  }
+  h1{
+    font-family:var(--font-disp); font-weight:700; font-size:clamp(1.7rem,5vw,2.4rem);
+    line-height:1.12; margin:0 0 14px; letter-spacing:-.01em; text-wrap:balance;
+  }
+  .lead{color:var(--muted); font-size:1.02rem; max-width:56ch; margin:0}
+
+  section{margin-bottom:52px}
+  h2{
+    font-family:var(--font-disp); font-weight:600; font-size:1.22rem;
+    margin:0 0 6px; letter-spacing:-.01em;
+  }
+  .sub{color:var(--muted); font-size:.92rem; margin:0 0 22px}
+
+  /* 核实结果 facts */
+  .facts{
+    display:grid; grid-template-columns:1fr; gap:0;
+    border:1px solid var(--border); border-radius:var(--radius);
+    background:var(--surface); overflow:hidden;
+  }
+  .facts .row{
+    display:grid; grid-template-columns:118px 1fr; gap:16px;
+    padding:13px 18px; align-items:baseline;
+  }
+  .facts .row + .row{border-top:1px solid var(--border)}
+  .facts dt{
+    font-family:var(--font-mono); font-size:12px; letter-spacing:.03em;
+    color:var(--muted); white-space:nowrap;
+  }
+  .facts dd{margin:0; font-size:.92rem; min-width:0}
+  .facts code{
+    font-family:var(--font-mono); font-size:.86rem; color:var(--accent-strong);
+    word-break:break-all;
+  }
+  .facts .path{font-family:var(--font-mono); font-size:.8rem; word-break:break-all; color:var(--fg)}
+
+  /* 步骤 */
+  .step{display:grid; grid-template-columns:44px 1fr; gap:0 18px; padding:22px 0; border-top:1px solid var(--border)}
+  .step:last-of-type{border-bottom:1px solid var(--border)}
+  .step .num{
+    font-family:var(--font-mono); font-size:14px; font-weight:500; color:var(--accent);
+    width:44px; height:44px; border-radius:12px; background:var(--accent-wash);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .step h3{font-family:var(--font-disp); font-weight:600; font-size:1.04rem; margin:0 0 6px}
+  .step .desc{color:var(--muted); font-size:.9rem; margin:0 0 14px}
+  .step .body{min-width:0}
+
+  /* 三种方式 */
+  .methods{display:grid; grid-template-columns:1fr; gap:14px}
+  .method{
+    border:1px solid var(--border); border-radius:var(--radius);
+    background:var(--surface); padding:18px 18px 14px;
+  }
+  .method h3{font-family:var(--font-disp); font-weight:600; font-size:1rem; margin:0 0 2px; display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+  .method .note{color:var(--muted); font-size:.86rem; margin:0 0 14px}
+  .badge{
+    font-family:var(--font-mono); font-size:11px; letter-spacing:.04em;
+    padding:2px 8px; border-radius:999px; font-weight:500;
+    background:var(--accent-wash); color:var(--accent-strong);
+    border:1px solid transparent;
+  }
+
+  /* 终端代码块 */
+  .term{border-radius:var(--radius); overflow:hidden; margin:14px 0; background:var(--code-bg); border:1px solid var(--border)}
+  .term-head{
+    display:flex; align-items:center; gap:10px; padding:9px 14px;
+    background:rgba(255,255,255,.04); border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  .dots{display:flex; gap:6px}
+  .dots i{width:10px; height:10px; border-radius:50%; display:block}
+  .dots i:nth-child(1){background:#FF5F57}
+  .dots i:nth-child(2){background:#FEBC2E}
+  .dots i:nth-child(3){background:#28C840}
+  .term-title{font-family:var(--font-mono); font-size:11px; color:var(--code-muted); flex:1}
+  .copy{
+    font-family:var(--font-mono); font-size:11px; color:var(--code-muted);
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.1);
+    border-radius:6px; padding:3px 9px; cursor:pointer; transition:color .15s, border-color .15s;
+  }
+  .copy:hover{color:var(--code-fg); border-color:rgba(255,255,255,.22)}
+  .copy:focus-visible{outline:2px solid var(--accent); outline-offset:1px}
+  .term pre{
+    margin:0; padding:14px 16px; overflow-x:auto;
+    font-family:var(--font-mono); font-size:.83rem; line-height:1.7; color:var(--code-fg);
+  }
+  .term code{font-family:inherit}
+  .term .c{color:var(--code-muted)}  /* 注释 */
+
+  /* 提示 */
+  .tip{
+    border-left:3px solid var(--accent); background:var(--surface);
+    border-radius:0 var(--radius) var(--radius) 0; padding:16px 20px; margin-bottom:18px;
+  }
+  .tip h3{font-family:var(--font-disp); font-weight:600; font-size:1rem; margin:0 0 6px}
+  .tip p{margin:0; font-size:.92rem; color:var(--muted)}
+  .tip code{font-family:var(--font-mono); font-size:.84rem; color:var(--accent-strong)}
+
+  footer{margin-top:48px; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:.85rem}
+
+  @media (max-width:520px){
+    .facts .row{grid-template-columns:1fr; gap:4px}
+    .facts dt{white-space:normal}
+    .step{grid-template-columns:1fr; gap:12px}
+  }
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Claude Code · 安装备忘</p>
+    <h1>Claude Code 安装教程</h1>
+    <p class="lead">你当初是用 <strong>npm 全局安装</strong>的。这一页汇总了这台机器的核实结果，以及换新电脑时的重装步骤。</p>
+  </header>
+
+  <section>
+    <h2>你的安装方式</h2>
+    <p class="sub">以下都从本机实际核实，不是模板套话。</p>
+    <dl class="facts">
+      <div class="row"><dt>安装命令</dt><dd><code>npm install -g @anthropic-ai/claude-code</code></dd></div>
+      <div class="row"><dt>Node 环境</dt><dd>nvm 管理 · node v24.16.0</dd></div>
+      <div class="row"><dt>安装位置</dt><dd class="path">~/.nvm/versions/node/v24.16.0/lib/node_modules/@anthropic-ai/claude-code</dd></div>
+      <div class="row"><dt>当前版本</dt><dd>2.1.331</dd></div>
+      <div class="row"><dt>架构</dt><dd>Apple Silicon（arm64，原生包 darwin-arm64）</dd></div>
+      <div class="row"><dt>更新方式</dt><dd>自动更新，走 npm-global 路径</dd></div>
+    </dl>
+  </section>
+
+  <section>
+    <h2>重装教程 · 三步</h2>
+    <p class="sub">按顺序执行；第 1 步在你现有机器上已经完成了，换新机时从头做。</p>
+
+    <div class="step">
+      <div class="num">1</div>
+      <div class="body">
+        <h3>装 Node（nvm 方式）</h3>
+        <p class="desc">nvm 用来管理 Node 版本，跟你现在的环境一致。</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
+          <pre><code><span class="c"># 安装 nvm（如果还没有）</span>
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+
+<span class="c"># 重新加载配置</span>
+source ~/.zshrc
+
+<span class="c"># 安装并启用一个 Node 版本</span>
+nvm install 24
+nvm use 24</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">2</div>
+      <div class="body">
+        <h3>装 Claude Code</h3>
+        <p class="desc">npm 全局安装，会自动拉取你机器架构对应的原生二进制。</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
+          <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">3</div>
+      <div class="body">
+        <h3>启动</h3>
+        <p class="desc">先验证版本，再进入对话。</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
+          <pre><code>claude --version      <span class="c"># 验证是否装好</span>
+claude                <span class="c"># 进入交互对话</span>
+claude "你的问题"       <span class="c"># 一次性问答</span></code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>三种安装方式</h2>
+    <p class="sub">你选的是第二种。三种都可用，任选其一。</p>
+    <div class="methods">
+      <div class="method">
+        <h3>原生安装脚本 <span class="badge">官方推荐</span></h3>
+        <p class="note">不依赖 Node，自动更新最省心，适合想摆脱 Node 环境时。</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
+          <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+        </div>
+      </div>
+      <div class="method">
+        <h3>npm <span class="badge">你的方式</span></h3>
+        <p class="note">前提是装了 Node。你现在这套跑得好好的，不用换。</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
+          <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+        </div>
+      </div>
+      <div class="method">
+        <h3>Homebrew</h3>
+        <p class="note">macOS 上装了 Homebrew 的话，一条命令也能装。</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
+          <pre><code>brew install --cask claude-code</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>两个实用提示</h2>
+    <div class="tip">
+      <h3>PATH 依赖 nvm</h3>
+      <p>因为是 npm 全局安装，<code>claude</code> 命令只有在 nvm 加载后才在 PATH 里。平时开终端没问题（<code>~/.zshrc</code> 已加载 nvm），但用 <code>ssh</code> 远程跑、或写脚本 / cron 调它时，可能报 <code>command not found</code>——先执行 <code>source ~/.nvm/nvm.sh</code>，或直接用完整路径 <code>~/.nvm/versions/node/v24.16.0/bin/claude</code>。</p>
+    </div>
+    <div class="tip">
+      <h3>更新</h3>
+      <p>它会自动更新（走 npm-global）。想手动触发就跑 <code>claude update</code>，或重跑 <code>npm install -g @anthropic-ai/claude-code</code>。</p>
+    </div>
+  </section>
+
+  <footer>换新电脑时，从头照第 2 节三步走即可。</footer>
+</div>
+
+<script>
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var code = btn.closest('.term').querySelector('code');
+      var text = code.innerText;
+      function fallback(){
+        var r = document.createRange(); r.selectNodeContents(code);
+        var s = getSelection(); s.removeAllRanges(); s.addRange(r);
+      }
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(function(){
+          btn.textContent = '已复制';
+          setTimeout(function(){ btn.textContent = '复制'; }, 1500);
+        }, fallback);
+      } else { fallback(); }
+    });
+  });
+</script>
