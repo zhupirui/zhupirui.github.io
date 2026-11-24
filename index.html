@@ -2,7 +2,7 @@
 <title>Claude Code 安装教程</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-  /* 布局：单栏文档，左侧一条细边线标注章节；代码块做“终端”样式（始终深色）。 */
+  /* 布局：单栏文档；代码块做“终端”样式（始终深色）。 */
   :root{
     --bg:#F4F6F8; --surface:#FFFFFF; --surface-2:#EDF1F5;
     --fg:#17202B; --muted:#5A6B7E;
@@ -54,6 +54,7 @@
     line-height:1.12; margin:0 0 14px; letter-spacing:-.01em; text-wrap:balance;
   }
   .lead{color:var(--muted); font-size:1.02rem; max-width:56ch; margin:0}
+  strong{color:var(--fg)}
 
   section{margin-bottom:52px}
   h2{
@@ -82,7 +83,6 @@
     font-family:var(--font-mono); font-size:.86rem; color:var(--accent-strong);
     word-break:break-all;
   }
-  .facts .path{font-family:var(--font-mono); font-size:.8rem; word-break:break-all; color:var(--fg)}
 
   /* 步骤 */
   .step{display:grid; grid-template-columns:44px 1fr; gap:0 18px; padding:22px 0; border-top:1px solid var(--border)}
@@ -96,21 +96,6 @@
   .step .desc{color:var(--muted); font-size:.9rem; margin:0 0 14px}
   .step .desc code{font-family:var(--font-mono); font-size:.86em; color:var(--accent-strong)}
   .step .body{min-width:0}
-
-  /* 三种方式 */
-  .methods{display:grid; grid-template-columns:1fr; gap:14px}
-  .method{
-    border:1px solid var(--border); border-radius:var(--radius);
-    background:var(--surface); padding:18px 18px 14px;
-  }
-  .method h3{font-family:var(--font-disp); font-weight:600; font-size:1rem; margin:0 0 2px; display:flex; align-items:center; gap:10px; flex-wrap:wrap}
-  .method .note{color:var(--muted); font-size:.86rem; margin:0 0 14px}
-  .badge{
-    font-family:var(--font-mono); font-size:11px; letter-spacing:.04em;
-    padding:2px 8px; border-radius:999px; font-weight:500;
-    background:var(--accent-wash); color:var(--accent-strong);
-    border:1px solid transparent;
-  }
 
   /* 终端代码块 */
   .term{border-radius:var(--radius); overflow:hidden; margin:14px 0; background:var(--code-bg); border:1px solid var(--border)}
@@ -159,154 +144,129 @@
 
 <div class="wrap">
   <header>
-    <p class="eyebrow">Claude Code · 安装备忘</p>
+    <p class="eyebrow">Claude Code · 手把手教程</p>
     <h1>Claude Code 安装教程</h1>
-    <p class="lead">你当初是用 <strong>npm 全局安装</strong>的。这一页汇总了这台机器的核实结果、重装步骤，以及给 Windows 用户的安装方法。</p>
+    <p class="lead">Claude Code 是一个 <strong>AI 编程助手</strong>，装在电脑上、在终端里对话。这一页零基础手把手，教你（和同学）在 <strong>Windows</strong> 和 <strong>Mac</strong> 上装好它，照着做就行。</p>
   </header>
 
   <section>
-    <h2>你的安装方式</h2>
-    <p class="sub">以下都从本机实际核实，不是模板套话。</p>
-    <dl class="facts">
-      <div class="row"><dt>安装命令</dt><dd><code>npm install -g @anthropic-ai/claude-code</code></dd></div>
-      <div class="row"><dt>Node 环境</dt><dd>nvm 管理 · node v24.16.0</dd></div>
-      <div class="row"><dt>安装位置</dt><dd class="path">~/.nvm/versions/node/v24.16.0/lib/node_modules/@anthropic-ai/claude-code</dd></div>
-      <div class="row"><dt>当前版本</dt><dd>2.1.331</dd></div>
-      <div class="row"><dt>架构</dt><dd>Apple Silicon（arm64，原生包 darwin-arm64）</dd></div>
-      <div class="row"><dt>更新方式</dt><dd>自动更新，走 npm-global 路径</dd></div>
-    </dl>
-  </section>
-
-  <section>
-    <h2>重装教程 · 三步（Mac / Linux）</h2>
-    <p class="sub">按顺序执行；第 1 步在你现有机器上已经完成了，换新机时从头做。</p>
-
-    <div class="step">
-      <div class="num">1</div>
-      <div class="body">
-        <h3>装 Node（nvm 方式）</h3>
-        <p class="desc">nvm 用来管理 Node 版本，跟你现在的环境一致。</p>
-        <div class="term">
-          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
-          <pre><code><span class="c"># 安装 nvm（如果还没有）</span>
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-
-<span class="c"># 重新加载配置</span>
-source ~/.zshrc
-
-<span class="c"># 安装并启用一个 Node 版本</span>
-nvm install 24
-nvm use 24</code></pre>
-        </div>
-      </div>
+    <h2>先搞懂两个词（30 秒）</h2>
+    <div class="tip">
+      <h3>终端 / PowerShell 是什么</h3>
+      <p>就是电脑上一个「能打字、电脑会执行」的窗口。Windows 上叫 <strong>PowerShell</strong>，Mac 上叫「终端」。打开它，把命令粘进去回车，就完事。</p>
     </div>
-
-    <div class="step">
-      <div class="num">2</div>
-      <div class="body">
-        <h3>装 Claude Code</h3>
-        <p class="desc">npm 全局安装，会自动拉取你机器架构对应的原生二进制。</p>
-        <div class="term">
-          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
-          <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
-        </div>
-      </div>
-    </div>
-
-    <div class="step">
-      <div class="num">3</div>
-      <div class="body">
-        <h3>启动</h3>
-        <p class="desc">先验证版本，再进入对话。</p>
-        <div class="term">
-          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
-          <pre><code>claude --version      <span class="c"># 验证是否装好</span>
-claude                <span class="c"># 进入交互对话</span>
-claude "你的问题"       <span class="c"># 一次性问答</span></code></pre>
-        </div>
-      </div>
+    <div class="tip">
+      <h3>命令是什么</h3>
+      <p>就是一行字，让电脑干一件事。下面所有命令你<strong>不用懂意思</strong>，复制 → 粘贴 → 回车，即可。</p>
     </div>
   </section>
 
   <section>
-    <h2>三种安装方式</h2>
-    <p class="sub">你选的是第二种。三种都可用，任选其一。</p>
-    <div class="methods">
-      <div class="method">
-        <h3>原生安装脚本 <span class="badge">官方推荐</span></h3>
-        <p class="note">不依赖 Node，自动更新最省心。Mac / Linux 用下面这条，Windows 用 PowerShell 版（见「Windows 怎么装」一节）。</p>
-        <div class="term">
-          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
-          <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
-        </div>
-      </div>
-      <div class="method">
-        <h3>npm <span class="badge">你的方式</span></h3>
-        <p class="note">前提是装了 Node。你现在这套跑得好好的，不用换。</p>
-        <div class="term">
-          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
-          <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
-        </div>
-      </div>
-      <div class="method">
-        <h3>Homebrew</h3>
-        <p class="note">macOS 上装了 Homebrew 的话，一条命令也能装。</p>
-        <div class="term">
-          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
-          <pre><code>brew install --cask claude-code</code></pre>
-        </div>
-      </div>
-    </div>
-  </section>
+    <h2>Windows 安装（手把手）</h2>
+    <p class="sub">给用 Windows 的同学。推荐「方法 A」，不用装别的软件，最简单。</p>
 
-  <section>
-    <h2>Windows 怎么装</h2>
-    <p class="sub">给用 Windows 的人。推荐 A 方式，不用装 Node。Windows 不用 Homebrew（那是 Mac / Linux 的）。</p>
+    <div class="tip">
+      <h3>先打开 PowerShell（就一步）</h3>
+      <p>点屏幕左下角「开始」按钮 → 键盘直接打字 <code>PowerShell</code> → 回车。弹出一个蓝框框（或黑框框），那就是它。</p>
+    </div>
 
     <div class="step">
       <div class="num">A</div>
       <div class="body">
-        <h3>原生安装（最简单，推荐）</h3>
-        <p class="desc">按 <code>Win</code> 键，输入 <code>PowerShell</code> 回车打开，粘贴运行下面这行（原生命令只在 PowerShell 里有效）：</p>
+        <h3>方法 A：官方脚本（最简单，推荐）</h3>
+        <p class="desc">在 PowerShell 窗口里，把下面这一行复制粘贴进去，回车：</p>
         <div class="term">
           <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">PowerShell</span><button class="copy">复制</button></div>
           <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
         </div>
-        <p class="desc">装完输入 <code>claude</code> 即可启动。若当前窗口不认 <code>claude</code>，关掉窗口重开一个。</p>
+        <p class="desc"><strong>这行在干嘛？</strong>就是「从网上下载官方安装脚本并运行」，它会自己装好，你等着就行。装完输入 <code>claude</code> 回车，出来对话界面就是成功了。</p>
       </div>
     </div>
 
     <div class="step">
       <div class="num">B</div>
       <div class="body">
-        <h3>npm 安装（和 Mac 同一条命令）</h3>
-        <p class="desc">先装 Node：去 nodejs.org 下载 LTS 版一路「下一步」，或用 winget（<code>npm</code> 命令在 PowerShell 和「命令提示符」里都能跑）：</p>
+        <h3>方法 B：npm（先装 Node）</h3>
+        <p class="desc">先装一个基础软件 <strong>Node.js</strong>。用 Windows 自带的「命令行软件商店」winget，一句话搞定：</p>
         <div class="term">
           <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">PowerShell</span><button class="copy">复制</button></div>
           <pre><code>winget install OpenJS.NodeJS.LTS</code></pre>
         </div>
-        <p class="desc">然后在 PowerShell 里运行：</p>
+        <p class="desc">装完 Node，电脑里就有了 <code>npm</code> 工具。再在 PowerShell 里运行：</p>
         <div class="term">
           <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">PowerShell</span><button class="copy">复制</button></div>
           <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
         </div>
+        <p class="desc"><strong>不想用 winget？</strong>也可以去 nodejs.org 下载 LTS 版，双击一路「下一步」装 Node，再回来跑上面那条 npm 命令。</p>
       </div>
     </div>
   </section>
 
   <section>
-    <h2>两个实用提示</h2>
+    <h2>Mac 安装（手把手）</h2>
+    <p class="sub">给用 Mac 的人。同样两个方法，方法 A 最简单。</p>
+
     <div class="tip">
-      <h3>PATH 依赖 nvm</h3>
-      <p>因为是 npm 全局安装，<code>claude</code> 命令只有在 nvm 加载后才在 PATH 里。平时开终端没问题（<code>~/.zshrc</code> 已加载 nvm），但用 <code>ssh</code> 远程跑、或写脚本 / cron 调它时，可能报 <code>command not found</code>——先执行 <code>source ~/.nvm/nvm.sh</code>，或直接用完整路径 <code>~/.nvm/versions/node/v24.16.0/bin/claude</code>。</p>
+      <h3>先打开「终端」</h3>
+      <p>按 <code>Command + 空格</code> 搜索「终端」（Terminal），回车打开。</p>
     </div>
-    <div class="tip">
-      <h3>更新</h3>
-      <p>它会自动更新（走 npm-global）。想手动触发就跑 <code>claude update</code>，或重跑 <code>npm install -g @anthropic-ai/claude-code</code>。</p>
+
+    <div class="step">
+      <div class="num">A</div>
+      <div class="body">
+        <h3>方法 A：官方脚本（最简单）</h3>
+        <p class="desc">在终端里粘贴下面这行，回车，等它自己装好：</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">终端</span><button class="copy">复制</button></div>
+          <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
+        </div>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">B</div>
+      <div class="body">
+        <h3>方法 B：npm（先装 Node）</h3>
+        <p class="desc">先去 nodejs.org 下载 LTS 版装好 Node，然后在终端里运行：</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">终端</span><button class="copy">复制</button></div>
+          <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
+        </div>
+        <p class="desc">（我自己这台 Mac 就是用方法 B 装的，用的 Node 版本管理工具叫 nvm，不影响结果。）</p>
+      </div>
     </div>
   </section>
 
-  <footer>换新电脑时，从头照第 2 节三步走即可。</footer>
+  <section>
+    <h2>装好之后怎么用</h2>
+    <div class="term">
+      <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">终端 / PowerShell</span><button class="copy">复制</button></div>
+      <pre><code>claude              <span class="c"># 启动，进入对话</span>
+claude "你的问题"     <span class="c"># 一句话提问</span></code></pre>
+    </div>
+    <div class="tip">
+      <h3>提示：命令不认怎么办</h3>
+      <p>装完后如果输入 <code>claude</code> 提示「找不到命令」，把 PowerShell / 终端窗口<strong>关掉重开一个</strong>再试。还不行就重跑一遍安装命令。</p>
+    </div>
+    <div class="tip">
+      <h3>更新</h3>
+      <p>它会自动更新。想手动更新就跑 <code>claude update</code>。</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>附：作者这台 Mac 的实际情况（可跳过）</h2>
+    <p class="sub">以下是作者本人机器的核实信息，仅供对照，不用照做。</p>
+    <dl class="facts">
+      <div class="row"><dt>安装命令</dt><dd><code>npm install -g @anthropic-ai/claude-code</code></dd></div>
+      <div class="row"><dt>Node 环境</dt><dd>nvm 管理 · node v24.16.0</dd></div>
+      <div class="row"><dt>当前版本</dt><dd>2.1.331</dd></div>
+      <div class="row"><dt>架构</dt><dd>Apple Silicon（arm64）</dd></div>
+      <div class="row"><dt>更新方式</dt><dd>自动更新，走 npm-global 路径</dd></div>
+    </dl>
+  </section>
+
+  <footer>照上面的步骤做，Windows 和 Mac 都能装好。</footer>
 </div>
 
 <script>
