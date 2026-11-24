@@ -94,6 +94,7 @@
   }
   .step h3{font-family:var(--font-disp); font-weight:600; font-size:1.04rem; margin:0 0 6px}
   .step .desc{color:var(--muted); font-size:.9rem; margin:0 0 14px}
+  .step .desc code{font-family:var(--font-mono); font-size:.86em; color:var(--accent-strong)}
   .step .body{min-width:0}
 
   /* 三种方式 */
@@ -160,7 +161,7 @@
   <header>
     <p class="eyebrow">Claude Code · 安装备忘</p>
     <h1>Claude Code 安装教程</h1>
-    <p class="lead">你当初是用 <strong>npm 全局安装</strong>的。这一页汇总了这台机器的核实结果，以及换新电脑时的重装步骤。</p>
+    <p class="lead">你当初是用 <strong>npm 全局安装</strong>的。这一页汇总了这台机器的核实结果、重装步骤，以及给 Windows 用户的安装方法。</p>
   </header>
 
   <section>
@@ -177,7 +178,7 @@
   </section>
 
   <section>
-    <h2>重装教程 · 三步</h2>
+    <h2>重装教程 · 三步（Mac / Linux）</h2>
     <p class="sub">按顺序执行；第 1 步在你现有机器上已经完成了，换新机时从头做。</p>
 
     <div class="step">
@@ -233,7 +234,7 @@ claude "你的问题"       <span class="c"># 一次性问答</span></code></pre
     <div class="methods">
       <div class="method">
         <h3>原生安装脚本 <span class="badge">官方推荐</span></h3>
-        <p class="note">不依赖 Node，自动更新最省心，适合想摆脱 Node 环境时。</p>
+        <p class="note">不依赖 Node，自动更新最省心。Mac / Linux 用下面这条，Windows 用 PowerShell 版（见「Windows 怎么装」一节）。</p>
         <div class="term">
           <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
           <pre><code>curl -fsSL https://claude.ai/install.sh | bash</code></pre>
@@ -253,6 +254,41 @@ claude "你的问题"       <span class="c"># 一次性问答</span></code></pre
         <div class="term">
           <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">zsh</span><button class="copy">复制</button></div>
           <pre><code>brew install --cask claude-code</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Windows 怎么装</h2>
+    <p class="sub">给用 Windows 的人。推荐 A 方式，不用装 Node。Windows 不用 Homebrew（那是 Mac / Linux 的）。</p>
+
+    <div class="step">
+      <div class="num">A</div>
+      <div class="body">
+        <h3>原生安装（最简单，推荐）</h3>
+        <p class="desc">按 <code>Win</code> 键，输入 <code>PowerShell</code> 回车打开，粘贴运行下面这行（原生命令只在 PowerShell 里有效）：</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">PowerShell</span><button class="copy">复制</button></div>
+          <pre><code>irm https://claude.ai/install.ps1 | iex</code></pre>
+        </div>
+        <p class="desc">装完输入 <code>claude</code> 即可启动。若当前窗口不认 <code>claude</code>，关掉窗口重开一个。</p>
+      </div>
+    </div>
+
+    <div class="step">
+      <div class="num">B</div>
+      <div class="body">
+        <h3>npm 安装（和 Mac 同一条命令）</h3>
+        <p class="desc">先装 Node：去 nodejs.org 下载 LTS 版一路「下一步」，或用 winget（<code>npm</code> 命令在 PowerShell 和「命令提示符」里都能跑）：</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">PowerShell</span><button class="copy">复制</button></div>
+          <pre><code>winget install OpenJS.NodeJS.LTS</code></pre>
+        </div>
+        <p class="desc">然后在 PowerShell 里运行：</p>
+        <div class="term">
+          <div class="term-head"><span class="dots"><i></i><i></i><i></i></span><span class="term-title">PowerShell</span><button class="copy">复制</button></div>
+          <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
         </div>
       </div>
     </div>
